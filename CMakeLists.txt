@@ -144,12 +144,17 @@ if (PYBIND11_INSTALL)
       set(PYBIND11_EXPORT_NAME "${PROJECT_NAME}Targets")
     endif()
 
+    message(STATUS "pybind11 export_name=${PYBIND11_EXPORT_NAME}")
     install(TARGETS pybind11 module embed
             EXPORT "${PYBIND11_EXPORT_NAME}")
-    if(PYBIND11_MASTER_PROJECT)
+    #if(PYBIND11_MASTER_PROJECT)
       install(EXPORT "${PYBIND11_EXPORT_NAME}"
               NAMESPACE "${PROJECT_NAME}::"
               DESTINATION ${PYBIND11_CMAKECONFIG_INSTALL_DIR})
-    endif()
+    #endif()
+    export(EXPORT ${PYBIND11_EXPORT_NAME}
+      FILE "${CMAKE_CURRENT_BINARY_DIR}/pybind11/${PYBIND11_EXPORT_NAME}.cmake"
+      NAMESPACE pybind11::
+    )
   endif()
 endif()
